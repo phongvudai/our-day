@@ -5,6 +5,7 @@ import { Phone, MapPin, ArrowRight, MapPinned } from "lucide-react";
 import { SceneProps } from "../WeddingStory";
 
 interface ScheduleItem {
+  day: string;
   time: string;
   title: string;
   location: string;
@@ -13,12 +14,14 @@ interface ScheduleItem {
 
 const scheduleItems: ScheduleItem[] = [
   {
+    day: "THỨ BẢY",
     time: "08:00 SÁNG",
     title: "Lễ ăn hỏi",
     location: "Gia đình nhà gái",
     locationLink: "https://maps.app.goo.gl/Hr4QPsSVHLUDYpj16",
   },
   {
+    day: "CHỦ NHẬT",
     time: "01:30 CHIỀU",
     title: "Lễ thành hôn",
     location: "Gia đình nhà trai",
@@ -34,7 +37,7 @@ export default function Scene3DateTheme({}: SceneProps) {
         background: "linear-gradient(to bottom right, #ffffff, #EAE6E1)",
       }}
       animate={{
-        background: "linear-gradient(to bottom right, #FC8EAC, #FC46AA)",
+        background: "linear-gradient(to bottom right, #f7c3d0ff, #fa7dc2ff)",
       }}
       transition={{ duration: 2, ease: "easeInOut" }}
     >
@@ -134,6 +137,12 @@ export default function Scene3DateTheme({}: SceneProps) {
                     {/* Time */}
                     <div className="mb-2">
                       <h3 className="typography-formal text-xl font-bold text-white tracking-wide">
+                        {item.day}
+                      </h3>
+                    </div>
+
+                    <div className="mb-2">
+                      <h3 className="typography-formal text-xl font-bold text-white tracking-wide">
                         {item.time}
                       </h3>
                     </div>
@@ -176,43 +185,6 @@ export default function Scene3DateTheme({}: SceneProps) {
                   </div>
                 </motion.div>
               ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Contact Information Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          className="w-full max-w-md mt-8"
-        >
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-            <div className="flex items-center justify-center mb-4">
-              <Phone className="w-5 h-5 text-white mr-2" />
-              <span className="text-white font-medium">
-                SĐT liên hệ
-              </span>
-            </div>
-
-            <div className="space-y-3">
-              <div className="text-center">
-                <a
-                  href="tel:0975142475"
-                  className="text-white hover:text-white/80 transition-colors duration-200 font-medium"
-                >
-                  Cô dâu: 0975 142 475
-                </a>
-              </div>
-
-              <div className="text-center">
-                <a
-                  href="tel:0363830369"
-                  className="text-white hover:text-white/80 transition-colors duration-200 font-medium"
-                >
-                  Chú rể: 0363 830 369
-                </a>
-              </div>
             </div>
           </div>
         </motion.div>

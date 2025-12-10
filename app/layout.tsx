@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/our-day/images/DP006368_1.avif",
-        width: 1200,
-        height: 630,
+        url: "/images/DP006368_1.jpg",
+        width: 1280,
+        height: 720,
         alt: "My & Phong Wedding Invitation",
       },
     ],
@@ -42,7 +42,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  themeColor: '#FC46AA',
+  themeColor: '#ec5daeff',
 };
 
 export default function RootLayout({
@@ -56,7 +56,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Great+Vibes&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-        <link rel="preload" as="image" href="/our-day/images/DP006368_1.avif" />
+        <link rel="preload" as="image" href="/our-day/images/DP006368_1.jpg" />
         <link rel="preload" as="image" href="/our-day/images/DP006509_1.avif" />
       </head>
       <body

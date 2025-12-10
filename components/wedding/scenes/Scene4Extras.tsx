@@ -12,7 +12,7 @@ interface PhotoItem {
   size?: "small" | "medium" | "large";
 }
 
-export default function Scene10Extras({}: SceneProps) {
+export default function Scene4Extras({}: SceneProps) {
   // Static engagement photos
   const photos: PhotoItem[] = [
     {

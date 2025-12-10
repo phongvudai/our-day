@@ -10,17 +10,19 @@ import Scene2Blessing from "./scenes/Scene2Blessing";
 import Scene3DateTheme from "./scenes/Scene3DateTheme";
 import Scene4Extras from "./scenes/Scene4Extras";
 import Scene5RSVP from "./scenes/Scene5RSVP";
+import Scene6Wishes from "./scenes/Scene6Wishes";
 
 const scenes = [
   Scene1Envelope,
   Scene2Blessing,
   Scene3DateTheme,
   Scene4Extras,
+  Scene6Wishes,
   Scene5RSVP,
 ];
 
 // Scenes that should not auto-advance (0-indexed)
-const noAutoAdvanceScenes = [0, 4]; // Scene1Envelope and Scene5RSVP
+const noAutoAdvanceScenes = [0, 5]; // Scene1Envelope and Scene6Wishes
 
 interface WeddingStoryProps {
   onComplete?: () => void;
@@ -79,7 +81,7 @@ export default function WeddingStory({ onComplete }: WeddingStoryProps) {
 
     const timer = setTimeout(() => {
       nextScene();
-    }, 30000); // 30 seconds per scene
+    }, 60000); // 60 seconds per scene
 
     return () => clearTimeout(timer);
   }, [currentScene, isPlaying, nextScene]);

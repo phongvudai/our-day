@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   output: 'export',
   basePath: basePath,
   trailingSlash: true,
+  env: {
+    NEXT_PUBLIC_FIREBASE_API_KEY: "AIzaSyBI88qUmWJopFAPGbhDin-xvbFfrTPIhO0",
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: "our-day-ad625.firebaseapp.com",
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: "our-day-ad625",
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: "our-day-ad625.firebasestorage.app",
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "89412211764",
+    NEXT_PUBLIC_FIREBASE_APP_ID: "1:89412211764:web:dc4709db2b25c9b1d96661",
+  },
   images: {
     unoptimized: true,
     formats: ['image/webp', 'image/avif'],
