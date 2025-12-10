@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '/our-day';
+
 const nextConfig: NextConfig = {
   output: 'export',
+  basePath: basePath,
   trailingSlash: true,
   images: {
     unoptimized: true,
@@ -9,7 +12,7 @@ const nextConfig: NextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  assetPrefix: '',
+  assetPrefix: basePath,
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.

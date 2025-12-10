@@ -45,7 +45,7 @@ export default function Scene1Envelope({ onNext }: SceneProps) {
     <div
       className="relative w-full h-full overflow-hidden"
       style={{
-        backgroundImage: "url('/images/DP006368_1.avif')",
+        backgroundImage: "url('/our-day/images/DP006368_1.avif')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

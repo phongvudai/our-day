@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, MapPin } from "lucide-react";
+import { Phone, MapPin, ArrowRight, MapPinned } from "lucide-react";
 import { SceneProps } from "../WeddingStory";
 
 interface ScheduleItem {
@@ -13,13 +13,13 @@ interface ScheduleItem {
 
 const scheduleItems: ScheduleItem[] = [
   {
-    time: "5:00 AM",
+    time: "08:00 SÁNG",
     title: "Lễ ăn hỏi",
     location: "Gia đình nhà gái",
     locationLink: "https://maps.app.goo.gl/Hr4QPsSVHLUDYpj16",
   },
   {
-    time: "9:00 AM",
+    time: "01:30 CHIỀU",
     title: "Lễ thành hôn",
     location: "Gia đình nhà trai",
     locationLink: "https://maps.app.goo.gl/2oUNMvPDiLnjoD3r7",
@@ -146,9 +146,22 @@ export default function Scene3DateTheme({}: SceneProps) {
 
                     {/* Event Title and Location Pin */}
                     <div className="flex items-center justify-between">
-                      <h4 className="typography-formal text-base font-medium text-white/95 tracking-wider">
-                        Tại {item.location}
-                      </h4>
+                      <div className="flex">
+                        <h4 className="typography-formal text-base font-medium text-white/95 tracking-wider">
+                          Tại {item.location}
+                        </h4>
+                        <motion.div
+                          animate={{ scale: [1, 1.4, 1] }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                          className="text-white/95 ml-5"
+                        >
+                          <ArrowRight />
+                        </motion.div>
+                      </div>
 
                       <button
                         onClick={() =>
@@ -157,7 +170,7 @@ export default function Scene3DateTheme({}: SceneProps) {
                         className="ml-3 p-1.5 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 rounded-full transition-all duration-200 hover:scale-110 group"
                         title={`Navigate to ${item.location}`}
                       >
-                        <MapPin className="w-4 h-4 text-white group-hover:text-white/90" />
+                        <MapPinned className="w-4 h-4 text-white group-hover:text-white/90" />
                       </button>
                     </div>
                   </div>

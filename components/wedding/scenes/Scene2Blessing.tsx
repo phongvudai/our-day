@@ -81,7 +81,7 @@ export default function Scene2Blessing({}: SceneProps) {
           >
             <div className="mb-4 flex justify-center">
               <img
-                src="/images/illustrations/hand-drawn-one-line-art-illustration.avif"
+                src="/our-day/images/illustrations/hand-drawn-one-line-art-illustration.avif"
                 alt="Decorative flower illustration"
                 className="w-38 h-38 object-contain"
               />

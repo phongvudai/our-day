@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSwipeable } from "react-swipeable";
-import { Volume2, VolumeX, RotateCcw } from "lucide-react";
+import { Volume2, VolumeX, RotateCcw, ChevronLeft, ChevronRight } from "lucide-react";
 import useSound from "use-sound";
 
 import Scene1Envelope from "./scenes/Scene1Envelope";
@@ -39,15 +38,14 @@ export default function WeddingStory({ onComplete }: WeddingStoryProps) {
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
   const progressRef = useRef<NodeJS.Timeout | null>(null);
-  const touchStartRef = useRef<number>(0);
-  const lastInteractionRef = useRef<number>(0);
   const [isAudioLoaded, setIsAudioLoaded] = useState(false);
   const [isAudioError, setIsAudioError] = useState(false);
+  const [hasOpenedInvitation, setHasOpenedInvitation] = useState(false);
 
   // Background music - add your wedding music file to public/audio/
-  const [play, { stop, pause, sound }] = useSound("/audio/wedding-music.webm", {
+  const [play, { stop, pause, sound }] = useSound("/our-day/audio/wedding-music.webm", {
     loop: true,
-    volume: 0.3,
+    volume: 2,
     preload: true, // Preload the audio file
     onload: () => {
       console.log("Wedding music loaded successfully");
@@ -65,6 +63,9 @@ export default function WeddingStory({ onComplete }: WeddingStoryProps) {
   });
 
   const nextScene = useCallback(() => {
+    if (currentScene === 0) {
+      setHasOpenedInvitation(true);
+    }
     if (currentScene < scenes.length - 1) {
       setCurrentScene((prev) => prev + 1);
     } else if (onComplete) {
@@ -172,133 +173,26 @@ export default function WeddingStory({ onComplete }: WeddingStoryProps) {
     }
   };
 
-  const goToScene = (index: number) => {
-    setCurrentScene(index);
-  };
-
   const restart = () => {
     setCurrentScene(0);
     setIsPlaying(true);
-  };
-
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
+    setHasOpenedInvitation(false);
   };
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
   };
 
-  // Touch handlers for navigation
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartRef.current = Date.now();
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const now = Date.now();
-    const touchDuration = now - touchStartRef.current;
-    const touch = e.changedTouches[0];
-
-    if (!touch) return; // Safety check
-
-    // Prevent double triggering within 500ms
-    if (now - lastInteractionRef.current < 500) {
-      console.log("Interaction too soon, ignoring");
-      return;
-    }
-
-    const screenWidth = typeof window !== "undefined" ? window.innerWidth : 400;
-    const tapX = touch.clientX;
-
-    // Quick tap detection (less than 300ms)
-    if (touchDuration < 300) {
-      console.log("Tap detected at:", tapX, "Screen width:", screenWidth);
-      lastInteractionRef.current = now;
-
-      if (tapX < screenWidth / 2) {
-        console.log("Previous scene");
-        prevScene(); // Left half - previous
-      } else {
-        console.log("Next scene");
-        nextScene(); // Right half - next
-      }
-    }
-  };
-
-  // Click handlers for desktop
-  const handleClick = (e: React.MouseEvent) => {
-    const now = Date.now();
-
-    // Prevent double triggering within 500ms
-    if (now - lastInteractionRef.current < 500) {
-      console.log("Click too soon, ignoring");
-      return;
-    }
-
-    const screenWidth = typeof window !== "undefined" ? window.innerWidth : 400;
-    const clickX = e.clientX;
-
-    lastInteractionRef.current = now;
-
-    if (clickX < screenWidth / 2) {
-      prevScene(); // Left half - previous
-    } else {
-      nextScene(); // Right half - next
-    }
-  };
-
-  // Swipe handlers with debouncing
-  const handleSwipeLeft = () => {
-    const now = Date.now();
-    if (now - lastInteractionRef.current < 500) {
-      console.log("Swipe left too soon, ignoring");
-      return;
-    }
-    lastInteractionRef.current = now;
-    console.log("Swipe left detected");
-    nextScene();
-  };
-
-  const handleSwipeRight = () => {
-    const now = Date.now();
-    if (now - lastInteractionRef.current < 500) {
-      console.log("Swipe right too soon, ignoring");
-      return;
-    }
-    lastInteractionRef.current = now;
-    console.log("Swipe right detected");
-    prevScene();
-  };
-
-  const swipeHandlers = useSwipeable({
-    onSwipedLeft: handleSwipeLeft,
-    onSwipedRight: handleSwipeRight,
-    preventScrollOnSwipe: true,
-    trackMouse: false, // Disable mouse tracking to prevent conflicts
-    swipeDuration: 500,
-    touchEventOptions: { passive: false },
-  });
-
   const CurrentSceneComponent = scenes[currentScene];
 
   return (
-    <div
-      className="relative w-full h-screen bg-black overflow-hidden"
-      {...swipeHandlers}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onClick={handleClick}
-    >
+    <div className="relative w-full h-screen bg-black overflow-hidden">
       {/* Progress bars */}
-      <div className="absolute top-4 left-4 right-4 z-50 flex gap-1">
+      <div className="absolute top-4 left-4 right-4 z-50 flex gap-1 pointer-events-none">
         {scenes.map((_, index) => (
           <div
             key={index}
-            className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              goToScene(index);
-            }}
+            className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden"
           >
             <div
               className="h-full bg-white transition-all duration-100 ease-linear"
@@ -378,12 +272,32 @@ export default function WeddingStory({ onComplete }: WeddingStoryProps) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation hints */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-50 text-white/70 text-sm text-center">
-        <p className="font-body">
-          Tap sides to navigate • Swipe to change scenes
-        </p>
-      </div>
+      {/* Navigation buttons */}
+      {hasOpenedInvitation && currentScene > 0 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            prevScene();
+          }}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+          aria-label="Previous scene"
+        >
+          <ChevronLeft size={28} />
+        </button>
+      )}
+
+      {hasOpenedInvitation && currentScene < scenes.length - 1 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            nextScene();
+          }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+          aria-label="Next scene"
+        >
+          <ChevronRight size={28} />
+        </button>
+      )}
     </div>
   );
 }
